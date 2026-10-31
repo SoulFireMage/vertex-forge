@@ -1,0 +1,68 @@
+[
+  {
+    "id": "vx_hb_001",
+    "drill_type": "hadron_builder",
+    "direction": "build",
+    "taxonomy_nodes": ["baryon_content", "flavour_numbers"],
+    "difficulty_elo": 950,
+    "register_tags": { "formal": "Build the Λ", "intuitive": "Three Quarks, One Strange" },
+    "prompt_instruction": "Build the Λ⁰ from the tiles. It is neutral, has baryon number 1 and strangeness −1.",
+    "hadron": "lambda0",
+    "tiles": ["u", "d", "s", "s", "ubar", "c"],
+    "explanation_formal": "Λ⁰ = uds: charge +⅔ − ⅓ − ⅓ = 0, baryon number 3 × ⅓ = 1, and strangeness −1 from the s quark. The decoys: ū is an antiquark where a quark belongs, c is the wrong flavour, and a second s would make uss, the Ξ⁰.",
+    "explanation_intuitive": "Neutral, one strange quark, three quarks in all: u, d, s. A second s overshoots to strangeness −2.",
+    "explanation_steps": [
+      "Baryon number 1 needs three quarks (no antiquarks).",
+      "Strangeness −1 needs exactly one s.",
+      "The other two must total charge +⅓: u (+⅔) and d (−⅓).",
+      "uds. (Σ⁰ is also uds; the two differ in how the u and d are combined, isospin 0 for Λ versus 1 for Σ⁰.)"
+    ],
+    "source": "PDG 2026, Quark Model review §15.2 (quantum numbers); isospin note from Griffiths 2e (chapter to be confirmed)",
+    "verify": true,
+    "reviewed": false
+  },
+  {
+    "id": "vx_hb_002",
+    "drill_type": "hadron_builder",
+    "direction": "name",
+    "taxonomy_nodes": ["meson_content", "flavour_numbers"],
+    "difficulty_elo": 1000,
+    "register_tags": { "formal": "Name the u s̄ meson", "intuitive": "Up and Anti-Strange" },
+    "prompt_instruction": "A u quark and an s̄ antiquark. Which hadron is this?",
+    "tiles": ["u", "sbar"],
+    "options": ["k_plus", "k_minus", "k0", "pi_plus", "ds_plus"],
+    "expected": { "colour_neutral": true, "matches": ["k_plus"] },
+    "explanation_formal": "u s̄ has charge +⅔ + ⅓ = +1 and strangeness +1 (the s̄ carries the opposite of the s quark’s −1). That is the K⁺. The K⁻ is its antiparticle, s ū.",
+    "explanation_intuitive": "An anti-strange quark gives strangeness +1, and with an up quark the charge is +1: the positive kaon.",
+    "explanation_steps": [
+      "One quark and one antiquark: a meson, colour-neutral.",
+      "Charge: u (+⅔) + s̄ (+⅓) = +1.",
+      "Strangeness: s̄ has S = +1.",
+      "Charged, S = +1: K⁺. (PDG states it directly: the strangeness of the K⁺ (us̄) is +1.)"
+    ],
+    "source": "PDG 2026, Quark Model review §15.2",
+    "reviewed": false
+  },
+  {
+    "id": "vx_hb_003",
+    "drill_type": "hadron_builder",
+    "direction": "name",
+    "taxonomy_nodes": ["colour_singlets"],
+    "difficulty_elo": 1000,
+    "register_tags": { "formal": "Two quarks, no antiquark", "intuitive": "Turned Away at the Door" },
+    "prompt_instruction": "A u quark and a d quark, on their own. Which hadron is this?",
+    "tiles": ["u", "d"],
+    "options": ["pi_plus", "proton", "delta_plus", "rho_plus"],
+    "expected": { "colour_neutral": false, "matches": [] },
+    "explanation_formal": "Two quarks cannot form a colour singlet: a singlet needs a quark with an antiquark, or three quarks. So ud is not a hadron. The π⁺ is u d̄, with an antiquark, which is the trap.",
+    "explanation_intuitive": "Two colours never add up to neutral. You need a colour and its anticolour, or all three colours.",
+    "explanation_steps": [
+      "Count: 2 quarks, 0 antiquarks.",
+      "Colour-neutral combinations: q q̄ (colour + anticolour) or qqq (one of each colour).",
+      "qq is neither. Not a hadron.",
+      "Compare π⁺ = u d̄: same flavours, but the d̄ is an antiquark."
+    ],
+    "source": "PDG 2026, Quark Model review §15.2–15.5",
+    "reviewed": false
+  }
+]

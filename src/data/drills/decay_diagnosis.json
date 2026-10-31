@@ -1,0 +1,66 @@
+[
+  {
+    "id": "vx_dd_001",
+    "drill_type": "decay_diagnosis",
+    "taxonomy_nodes": ["force_identification", "lifetime_scales", "energy_threshold"],
+    "difficulty_elo": 1100,
+    "register_tags": { "formal": "Σ⁰ → Λ γ", "intuitive": "Same Quarks, Lower Rung" },
+    "prompt_instruction": "Diagnose the Σ⁰’s decay.",
+    "reaction": "Sigma0 -> Lambda gamma",
+    "expected": { "allowed": true, "force": "electromagnetic", "band": "electromagnetic" },
+    "explanation_formal": "Σ⁰ and Λ are both uds, so no flavour changes and a photon carries off the 77 MeV difference: electromagnetic. The strong alternative, Σ⁰ → Λπ⁰, is closed because it would need 1250.7 MeV and the Σ⁰ has only 1192.6. The lifetime, 7.4 × 10⁻²⁰ s, sits in the electromagnetic band.",
+    "explanation_intuitive": "The quarks stay the same; they just rearrange into a lower-energy state and shed the difference as light. A pion would be cheaper to make in principle, but the Σ⁰ can’t afford one.",
+    "explanation_steps": [
+      "Quark content: Σ⁰ = uds, Λ = uds. S stays −1, so no weak decay is needed.",
+      "Charge, baryon number and lepton number all balance; one half-integer spin in and out.",
+      "Threshold: 1192.64 − 1115.68 = 76.96 MeV > 0.",
+      "A photon appears and no flavour changes, so the force is electromagnetic.",
+      "Could the strong force do it instead? Σ⁰ → Λπ⁰ needs 1115.68 + 134.98 = 1250.66 MeV, more than the Σ⁰’s mass. Closed.",
+      "Lifetime 7.4 × 10⁻²⁰ s: electromagnetic band."
+    ],
+    "source": "PDG 2026 masses and Σ⁰ lifetime",
+    "reviewed": false
+  },
+  {
+    "id": "vx_dd_002",
+    "drill_type": "decay_diagnosis",
+    "taxonomy_nodes": ["force_identification", "flavour_numbers", "lifetime_scales"],
+    "difficulty_elo": 1150,
+    "register_tags": { "formal": "Λ → p π⁻", "intuitive": "Strangeness Has to Pay Weakly" },
+    "prompt_instruction": "Diagnose the Λ’s main decay.",
+    "reaction": "Lambda -> p pi-",
+    "expected": { "allowed": true, "force": "weak", "band": "weak" },
+    "explanation_formal": "Strangeness changes from −1 to 0. Strong and electromagnetic interactions conserve strangeness, so only the weak interaction can do this. The Λ is the lightest strange baryon, so it has no strangeness-conserving way out. Its lifetime, 2.6 × 10⁻¹⁰ s, is in the weak band.",
+    "explanation_intuitive": "The s quark has to turn into a u, and only the weak desk changes flavour. There’s no lighter strange baryon to step down to, so the Λ waits for the slow desk.",
+    "explanation_steps": [
+      "Charge: 0 → +1 − 1 = 0. Baryon number 1 → 1. No leptons. Balances.",
+      "Threshold: 1115.68 − 938.27 − 139.57 = 37.84 MeV > 0.",
+      "Strangeness: Λ (uds) has S = −1; p (uud) and π⁻ (dū) have S = 0. ΔS = 1.",
+      "A change in S means the force is weak (rule 2).",
+      "Lifetime 2.6 × 10⁻¹⁰ s: weak band."
+    ],
+    "source": "PDG 2026 masses and Λ lifetime; spec §6 golden case",
+    "reviewed": false
+  },
+  {
+    "id": "vx_dd_003",
+    "drill_type": "decay_diagnosis",
+    "taxonomy_nodes": ["force_identification", "lifetime_scales"],
+    "difficulty_elo": 950,
+    "register_tags": { "formal": "Δ⁺⁺ → p π⁺", "intuitive": "Gone Before You Blink" },
+    "prompt_instruction": "Diagnose the Δ⁺⁺ decay.",
+    "reaction": "Delta++ -> p pi+",
+    "expected": { "allowed": true, "force": "strong", "band": "strong" },
+    "explanation_formal": "Only hadrons, every flavour number conserved, and about 154 MeV released: a strong decay. Its width of about 117 MeV corresponds to a lifetime ħ/Γ ≈ 5.6 × 10⁻²⁴ s.",
+    "explanation_intuitive": "Nothing changes flavour, nothing but hadrons is involved, and there’s plenty of energy. The strong desk handles it almost instantly.",
+    "explanation_steps": [
+      "Quarks: uuu → uud + ud̄. A d d̄ pair is created; the net flavour is unchanged.",
+      "Charge: +2 → +1 + 1. Baryon number: 1 → 1. No leptons.",
+      "Threshold: 1232 − 938.27 − 139.57 ≈ 154 MeV > 0.",
+      "Only hadrons and no flavour change: strong.",
+      "Lifetime from the width: 6.58 × 10⁻²² MeV·s ÷ 117 MeV ≈ 5.6 × 10⁻²⁴ s. Strong band."
+    ],
+    "source": "PDG 2026 Δ(1232) mass and width estimates",
+    "reviewed": false
+  }
+]

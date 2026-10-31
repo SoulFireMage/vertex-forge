@@ -1,0 +1,67 @@
+[
+  {
+    "id": "vx_la_001",
+    "drill_type": "ledger_audit",
+    "taxonomy_nodes": ["conservation_audit", "lepton_number", "electric_charge"],
+    "difficulty_elo": 900,
+    "register_tags": { "formal": "Neutron β decay", "intuitive": "The Neutron Pays Its Way" },
+    "prompt_instruction": "Audit free-neutron decay. Mark every account, then decide whether nature allows it.",
+    "reaction": "n -> p e- nubar_e",
+    "expected": { "allowed": true, "violated": [] },
+    "explanation_formal": "Every account balances, and the neutron is heavier than the proton plus the electron, so the decay is allowed. The antineutrino is what makes the lepton account close: the electron brings Lₑ = +1 and the antineutrino −1.",
+    "explanation_intuitive": "The books balance: the electron’s +1 on the electron sub-account is cancelled by the antineutrino’s −1, and there are three half-integer spins out for the neutron’s one in.",
+    "explanation_steps": [
+      "Charge: 0 → (+1) + (−1) + 0 = 0. Balances.",
+      "Baryon number: n has B = 1 (udd, three × ⅓); p has B = 1 (uud). Balances.",
+      "Lepton number: 0 → (e⁻: +1) + (ν̄ₑ: −1) = 0, and the same for Lₑ. L_μ and L_τ are 0 throughout.",
+      "Half-integer spins: 1 in, 3 out. Both odd, so the necessary condition holds.",
+      "Threshold: m(n) − m(p) − m(e) ≈ 939.565 − 938.272 − 0.511 = 0.782 MeV > 0. Allowed, with very little to spare.",
+      "A neutrino appears, so the force is weak."
+    ],
+    "source": "PDG 2026 masses (n, p, e⁻); spec §6 golden case",
+    "reviewed": false
+  },
+  {
+    "id": "vx_la_002",
+    "drill_type": "ledger_audit",
+    "taxonomy_nodes": ["lepton_number", "spin_statistics", "conservation_audit"],
+    "difficulty_elo": 1000,
+    "register_tags": { "formal": "Neutron decay without the antineutrino", "intuitive": "The Missing Receipt" },
+    "prompt_instruction": "Someone proposes that the neutron decays to a proton and an electron only. Audit it.",
+    "reaction": "n -> p e-",
+    "expected": { "allowed": false, "violated": ["lepton", "L_e", "spin_parity"] },
+    "explanation_formal": "Charge and baryon number balance, and there is energy to spare, but lepton number goes from 0 to 1 and the half-integer-spin count goes from one to two. Two independent accounts fail.",
+    "explanation_intuitive": "Without the antineutrino the lepton count gains a unit from nowhere, and a single spin-½ particle cannot turn into two: half-integers only pair up.",
+    "explanation_steps": [
+      "Charge: 0 → +1 − 1 = 0. Balances.",
+      "Baryon number: 1 → 1. Balances.",
+      "Lepton number: 0 → +1 (the electron). Violated, and so is the electron sub-account Lₑ.",
+      "Half-integer spins: 1 in, 2 out. One odd, one even: two spin-½ particles combine to integer spin, which cannot equal the neutron’s ½. Violated.",
+      "Historically, this missing energy and spin was why Pauli proposed the neutrino."
+    ],
+    "source": "Spec §6 golden case; historical note from Griffiths 2e (chapter to be confirmed)",
+    "verify": true,
+    "reviewed": false
+  },
+  {
+    "id": "vx_la_003",
+    "drill_type": "ledger_audit",
+    "taxonomy_nodes": ["baryon_number", "conservation_audit"],
+    "difficulty_elo": 1150,
+    "register_tags": { "formal": "Proton decay to e⁺π⁰", "intuitive": "Can the Proton Close Its Account?" },
+    "prompt_instruction": "Grand unified theories predict this decay. Audit it with the Standard Model ledger.",
+    "reaction": "p -> e+ pi0",
+    "expected": { "allowed": false, "violated": ["baryon", "lepton", "L_e"] },
+    "explanation_formal": "Charge balances and the energy is there, but baryon number goes from 1 to 0 and lepton number from 0 to −1. Their difference, B − L, is conserved (1 → 1). The Standard Model forbids the decay; experiments find τ(p → e⁺π⁰) > 2.4 × 10³⁴ years.",
+    "explanation_intuitive": "The quark count drops by one and the lepton count drops by one at the same time. The two errors cancel in B − L, but each account is broken on its own.",
+    "explanation_steps": [
+      "Charge: +1 → +1 + 0. Balances.",
+      "Baryon number: 1 → 0 (the positron and the pion carry none). Violated.",
+      "Lepton number: 0 → −1 (e⁺ is an antilepton). Violated, and so is Lₑ.",
+      "B − L: 1 − 0 = 1 before, 0 − (−1) = 1 after. Conserved, as grand unified theories typically keep it.",
+      "Threshold: 938.3 MeV > 0.5 + 135.0 MeV, so energy is not the obstacle."
+    ],
+    "source": "PDG 2026, Tests of Conservation Laws §6 (B − L, proton lifetime limit)",
+    "reviewed": false
+  }
+]

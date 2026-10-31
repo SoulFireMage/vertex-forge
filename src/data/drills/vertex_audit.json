@@ -1,0 +1,91 @@
+[
+  {
+    "id": "vx_va_001",
+    "drill_type": "vertex_audit",
+    "taxonomy_nodes": ["qed_vertex", "crossing"],
+    "difficulty_elo": 850,
+    "register_tags": { "formal": "The QED vertex", "intuitive": "Light Meets Charge" },
+    "prompt_instruction": "An electron and a positron meet at a point and a photon leaves. Is this a Standard Model vertex?",
+    "legs": ["e_minus", "e_plus", "photon"],
+    "layout": ["in", "in", "out"],
+    "expected": { "status": "legal" },
+    "explanation_formal": "f f̄ γ with f = e: the photon couples to the electron’s charge and the flavour is unchanged. As a vertex this is legal. As a complete process with a real photon, e⁺e⁻ → γ is forbidden by four-momentum, so the photon here must be virtual and go on to something else.",
+    "explanation_intuitive": "The photon talks to charge and never changes flavour; an electron and its own antiparticle are exactly what it likes. On its own the vertex can’t be the whole story, though: one real photon can’t carry away a pair’s energy and zero momentum at once.",
+    "explanation_steps": [
+      "Read every leg as incoming: e⁻, e⁺ and the photon (an outgoing photon is an incoming photon; it is its own antiparticle).",
+      "Charges: −1 + 1 + 0 = 0.",
+      "Fermion legs: one particle and its own antiparticle. Same flavour.",
+      "Boson: a photon, and the electron is charged. This matches f f̄ γ.",
+      "Kinematics are a separate question: the vertex appears inside larger diagrams such as e⁺e⁻ → μ⁺μ⁻."
+    ],
+    "source": "Vertex rules (spec §5.4); Griffiths 2e on QED vertices (chapter to be confirmed)",
+    "verify": true,
+    "reviewed": false
+  },
+  {
+    "id": "vx_va_002",
+    "drill_type": "vertex_audit",
+    "taxonomy_nodes": ["weak_neutral_vertex"],
+    "difficulty_elo": 1200,
+    "register_tags": { "formal": "A flavour-changing Z vertex", "intuitive": "The Z Tries to Change Flavour" },
+    "prompt_instruction": "A u quark, a c̄ antiquark and a Z meet at a point. Is this a tree-level vertex?",
+    "legs": ["u", "cbar", "z0"],
+    "layout": ["in", "in", "out"],
+    "expected": { "status": "not_tree_level", "reason": "neutral_flavour_change" },
+    "explanation_formal": "The charges balance (+⅔ − ⅔ + 0), so the vertex is well-formed, but the Z would have to change u into c. Neutral bosons never change flavour at tree level: there are no flavour-changing neutral currents in the Standard Model at this order.",
+    "explanation_intuitive": "The Z talks to everyone but changes nothing. Swapping a u for a c is a flavour change, and only the W does that.",
+    "explanation_steps": [
+      "All legs incoming: u (+⅔), c̄ (−⅔), Z (0). Sum 0, so no charge problem.",
+      "Fermion legs: a quark and an antiquark, but of different flavours (u and c).",
+      "The boson is neutral (Z). Neutral bosons couple f to f̄ of the same flavour only.",
+      "Not a tree-level vertex. Such transitions arise only through loops."
+    ],
+    "source": "Vertex rules (spec §5.4); Griffiths 2e on neutral currents (chapter to be confirmed)",
+    "verify": true,
+    "reviewed": false
+  },
+  {
+    "id": "vx_va_003",
+    "drill_type": "vertex_audit",
+    "taxonomy_nodes": ["higgs_vertices", "boson_self_couplings"],
+    "difficulty_elo": 1350,
+    "register_tags": { "formal": "h γ γ", "intuitive": "Does the Higgs Talk to Light?" },
+    "prompt_instruction": "The Higgs boson was discovered partly through its decay to two photons. Is h γ γ a tree-level vertex?",
+    "legs": ["higgs", "photon", "photon"],
+    "layout": ["in", "out", "out"],
+    "loop_fact": "h_gammagamma_loop",
+    "expected": { "status": "not_tree_level", "reason": "no_such_coupling" },
+    "explanation_formal": "The Higgs boson is electrically neutral and has no tree-level coupling to photons, which are massless. h → γγ is real but happens through loops: a virtual W⁺W⁻ pair dominates and interferes destructively with a smaller top-quark loop.",
+    "explanation_intuitive": "The Higgs talks in proportion to mass and photons have none, so there is no direct line. The decay still happens, by going round through heavy charged particles that talk to both.",
+    "explanation_steps": [
+      "Charges: 0 + 0 + 0. Well-formed.",
+      "No fermions; the bosons are h, γ, γ. That combination is not on the list of tree-level boson vertices.",
+      "So it is not a tree-level vertex.",
+      "Step 3: it occurs through loops of charged massive particles (W dominant, top smaller and of opposite sign)."
+    ],
+    "source": "PDG 2026, Status of Higgs Boson Physics §11.2.1",
+    "reviewed": false
+  },
+  {
+    "id": "vx_va_004",
+    "drill_type": "vertex_audit",
+    "taxonomy_nodes": ["weak_charged_vertex", "lepton_number"],
+    "difficulty_elo": 1250,
+    "register_tags": { "formal": "e ν̄_μ W", "intuitive": "Mismatched Family at the W Desk" },
+    "prompt_instruction": "An electron, a muon antineutrino and a W⁺ meet at a point. Is this a tree-level vertex in the flavour basis?",
+    "legs": ["e_minus", "nubar_mu", "w_plus"],
+    "layout": ["in", "out", "in"],
+    "expected": { "status": "not_tree_level", "reason": "lepton_family" },
+    "explanation_formal": "Charges balance (−1 + 0 + 1), the fermions pair a lepton with an antilepton, and the W does join charged leptons to neutrinos. But in the flavour basis each charged lepton couples only to its own neutrino, and the muon antineutrino belongs to the second generation.",
+    "explanation_intuitive": "The W desk swaps a charged lepton for its own neutrino, never someone else’s. An electron turning into a muon neutrino would break both the electron and the muon sub-accounts.",
+    "explanation_steps": [
+      "Read all legs as incoming. The leg drawn leaving on the right is the antiparticle of what is drawn: an outgoing ν_μ is an incoming ν̄_μ.",
+      "Charges: e⁻ (−1) + ν̄_μ (0) + W⁺ (+1) = 0.",
+      "Fermions: a charged lepton (first generation) and an antineutrino (second generation).",
+      "Flavour basis: the W vertex is ℓ⁻ ν̄_ℓ W⁺ with the same ℓ. Here ℓ differs. Not tree-level.",
+      "In the mass basis, lepton mixing (PMNS) appears at this vertex instead; that is the neutrino-oscillation story, outside the minimal-SM drills."
+    ],
+    "source": "Vertex rules (spec §5.4, flavour-basis convention §2)",
+    "reviewed": false
+  }
+]

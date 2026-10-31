@@ -1,0 +1,48 @@
+[
+  {
+    "id": "vx_mb_001",
+    "drill_type": "mediator_bridge",
+    "taxonomy_nodes": ["mediator_selection", "qed_vertex", "weak_neutral_vertex"],
+    "difficulty_elo": 1100,
+    "register_tags": { "formal": "e⁺e⁻ → μ⁺μ⁻", "intuitive": "Two Desks Can Take This One" },
+    "prompt_instruction": "An electron and a positron annihilate and a muon pair emerges. Which bosons can carry the internal line?",
+    "left": { "in": ["e_minus", "e_plus"], "out": [] },
+    "right": { "in": [], "out": ["mu_minus", "mu_plus"] },
+    "optional": ["higgs"],
+    "optional_note": "A Higgs line is also legal at tree level, but its couplings are proportional to the fermion masses and the electron’s is tiny, so its contribution is negligible. It is neither required nor penalised here.",
+    "expected": { "valid": ["photon", "z0", "higgs"] },
+    "explanation_formal": "Both vertices are f f̄ plus a neutral boson with no flavour change at either end. The photon (both are charged) and the Z (couples to every fermion) both work. The gluon fails: leptons have no colour. The W fails: it would have to carry charge, and each vertex is neutral.",
+    "explanation_intuitive": "Whatever crosses the bridge must be neutral and must talk to both electrons and muons without changing them. Light and the Z both qualify.",
+    "explanation_steps": [
+      "Left vertex, all legs incoming: e⁻, e⁺ and the line leaving (an incoming antiparticle of the mediator). Charge in from the externals is 0, so the mediator is neutral.",
+      "Candidates: γ, Z, h, g. W⁺ and W⁻ are charged: out.",
+      "γ: couples to charge, same flavour at both ends. Works.",
+      "Z: couples to every fermion, same flavour. Works.",
+      "g: needs colour; leptons have none. Fails.",
+      "h: legal, but proportional to mass: negligible here."
+    ],
+    "source": "Spec §4.5; PDG 2026 Higgs review §11.2.2 (Yukawa couplings ∝ mass)",
+    "reviewed": false
+  },
+  {
+    "id": "vx_mb_002",
+    "drill_type": "mediator_bridge",
+    "taxonomy_nodes": ["mediator_selection", "weak_charged_vertex", "lepton_number"],
+    "difficulty_elo": 1250,
+    "register_tags": { "formal": "Muon decay", "intuitive": "The Muon Hands Over Its Charge" },
+    "prompt_instruction": "A muon turns into a muon neutrino at the left vertex; an electron and an electron antineutrino leave the right vertex. What carries the line from left to right?",
+    "left": { "in": ["mu_minus"], "out": ["nu_mu"] },
+    "right": { "in": [], "out": ["e_minus", "nubar_e"] },
+    "expected": { "valid": ["w_minus"] },
+    "explanation_formal": "The left vertex turns μ⁻ into ν_μ, so the line must carry away charge −1 and change lepton flavour: a W⁻. At the right vertex the W⁻ becomes e⁻ ν̄ₑ, a charged lepton with its own antineutrino. The W is far heavier than the muon, so it is virtual.",
+    "explanation_intuitive": "The muon drops its charge into the bridge and becomes a neutrino; the bridge delivers that charge to an electron. Only a negative W can carry charge −1.",
+    "explanation_steps": [
+      "Left vertex, all incoming: μ⁻, ν̄_μ (the outgoing ν_μ crossed), and the mediator’s antiparticle. The externals sum to −1, so the line leaving carries −1: W⁻.",
+      "Check the left vertex: μ⁻ ν̄_μ W⁺ (incoming) is ℓ⁻ ν̄_ℓ W⁺. Legal.",
+      "Right vertex, all incoming: W⁻, e⁺, νₑ. That is ℓ⁺ ν_ℓ W⁻. Legal.",
+      "Neutral bosons fail at the left vertex: μ⁻ → ν_μ changes flavour and charge."
+    ],
+    "source": "Spec §4.5 and §5.4 vertex rules",
+    "reviewed": false
+  }
+]

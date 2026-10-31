@@ -6,12 +6,12 @@ It's intended to be real particle physics. Material will be checked and rechecke
 
 **How it is being built:** an AI coding agent (Claude Code) is writing it from Richard's spec, in three reviewed phases.
 
-## Status: phase 1 of 3 (the ledger engine, no UI yet)
+## Status: phase 2 of 3 (engine + app shell + the five drill players)
 
 | Phase | Contents | State |
 |---|---|---|
-| 1 | Ledger engine + golden tests (spec §5–6) | **done, awaiting review** |
-| 2 | App shell from systemics-forge + the five drill players | not started |
+| 1 | Ledger engine + golden tests (spec §5–6) | done, reviewed |
+| 2 | App shell from systemics-forge + the five drill players, 15 starter drills | **done, awaiting review** |
 | 3 | Seed content, REVIEW.md, Guide, Pages deploy | not started |
 
 Discrepancies between the spec and the sources are listed in [`docs/spec-notes.md`](docs/spec-notes.md).
@@ -30,6 +30,17 @@ Pure TypeScript, no UI dependencies.
 | `lifetime.ts` | Lifetime bands, the caveat, and the exceptions, each checked against the data. |
 
 `src/data/curated.ts` holds the beyond-tree-level facts (loops, Furry, Landau–Yang, C-parity), each with a source.
+
+## The app
+
+Preact + TypeScript + Vite with hash routing, adapted from systemics-forge. Kept: Glicko-2 ratings, FSRS-lite readiness, telemetry merge, optional Skapi sync (table `vx_telemetry`), the dual register, Daily Calibration, Blitz, Telemetry, Codex, Guide, Settings and Account. Removed for v1: the Generative Forge, the Crisis Desk, the Admin Studio and every LLM call.
+
+- **No network calls** unless you have signed in on that browser before: Skapi is not even contacted otherwise. The app uses system fonts instead of Google Fonts for the same reason.
+- **Five drill players** (`src/components/players/`). Each one grades by calling the engine. The `expected` block in a drill's JSON is only there so `npm test` can check it against the engine (spec §8.2).
+- **Particle table drawer** in every drill, and SVG vertex diagrams (wavy γ/W/Z, curly g, dashed h, fermion arrows).
+- Seed drills live in `src/data/drills/*.json`, the taxonomy in `src/data/taxonomy.ts`.
+
+`.github/workflows/deploy.yml` tests, builds and deploys to GitHub Pages on every push to `main`.
 
 ## Where the numbers come from
 
@@ -52,5 +63,6 @@ Re-run it when PDG publishes a new edition, and review the diff.
 ```sh
 npm ci
 npm test           # golden cases (spec §6) and engine tests
-npm run build      # phase 1: typecheck only (the Vite app build returns in phase 2)
+npm run dev        # local dev server
+npm run build      # typecheck + production build into dist/
 ```

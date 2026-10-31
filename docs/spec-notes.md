@@ -60,7 +60,7 @@ It's the `symmetry` account, last in the audit order. A test proves that every v
 
 ## 5. Vertex rules (§5.4)
 
-- **h f f̄ needs "same flavour".** The spec's table omits it. In the SM the Higgs couplings are flavour-diagonal, so h μ⁻ e⁺ is not a vertex. The engine enforces it.
+- **h f f̄ needs "same flavour".** The spec's table omits it. PDG Higgs review §11.2.2: rotating to the mass basis diagonalises the Higgs–fermion interactions, with m_f = y_f v/√2. So h μ⁻ e⁺ is not a vertex; the engine enforces this.
 - **Curated loop fact, "h → γγ, h → gg via loops (top quark, W)", lumps two different things together.** PDG Higgs review §11.2.1: h–g–g comes from a top-quark loop (minor contributions from lighter quarks; no W, since the W has no colour). h–γ–γ is dominated by the W loop, which interferes destructively with the smaller top loop. `src/data/curated.ts` says it that way.
 - **Chirality on an antifermion leg** (the spec's "u_R d̄ W⁻") is ambiguous. The engine reads a leg's chirality as the chirality of the field. The W couples only to left-chiral fields, and the antiparticles of a left-chiral field are right-handed in helicity in the massless limit. The Guide will need to say this in words.
 - **Quark–lepton vertices** can't even pass the charge-sum check with one SM boson: no combination of ±⅓/±⅔ with 0/±1 sums to 0 or ±1. The engine's quark–lepton "mismatch" branches are therefore defensive and unreachable, which is why coverage is 98.7% rather than 100%.
@@ -84,3 +84,11 @@ The PDG data show two more cases where the clock points at the wrong force. J/ψ
 - Banned-metaphor list: "right-handed particles don't feel the weak force". The accurate version should say **right-chiral**. Chirality and helicity coincide only for massless particles.
 - §2 hypercharge "believed to be Q = I₃ + Y/2". PDG §15.2 uses the generalised Gell-Mann–Nishijima formula Q = I_z + (B + S + C + B′ + T)/2, with Y = B + S − (C − B′ + T)/3 (B′ here is bottomness). Griffiths' own convention is **unverified**.
 - PDG writes π⁰ = (dd̄ − uū)/√2. Some texts flip the sign; it is a phase convention, and the table follows PDG.
+
+## 9. Phase 2 decisions
+
+- **Mediator Bridge, e⁺e⁻ → μ⁺μ⁻.** The spec says it "accepts γ and Z". The engine also finds **h**: tree-level Higgs exchange is legal, just negligible, because its couplings scale with the fermion masses. A drill can list such mediators as `optional`: neither required nor penalised, with a note. A test checks that every optional mediator is engine-valid.
+- **Hadron Builder.** Quark content doesn't fix the hadron: uud is both p and Δ⁺, ud̄ both π⁺ and ρ⁺, uds both Λ and Σ⁰. "Name it" drills accept every matching state and say why.
+- **Ledger Audit verdict.** "Forbidden: <first violated account>" depends on the engine's arbitrary account order. So naming *any* violated account is accepted, and the result names them all.
+- **Mediator direction.** The internal line runs left → right, so for muon decay W⁻ is correct and W⁺ is not (W⁺ right → left would be the same physics). The prompt and the diagram both say so.
+- **No network by default.** The parent apps contact Skapi on every page load. The spec (§11) allows only optional sync, so Skapi now starts only after a sign-in on that browser. Google Fonts were dropped for system fonts.

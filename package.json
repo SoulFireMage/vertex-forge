@@ -5,11 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc --noEmit",
+    "build": "tsc --noEmit && vite build",
     "preview": "vite preview",
     "test": "vitest run",
-    "typecheck": "tsc --noEmit",
-    "build:app": "tsc --noEmit && vite build"
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@preact/signals": "^2.11.4",
