@@ -1,0 +1,10 @@
+{
+  "source": "PDG 2026, CKM Quark-Mixing Matrix review, Eq. (12.27): global-fit magnitudes",
+  "rows": ["u", "c", "t"],
+  "cols": ["d", "s", "b"],
+  "magnitude": [
+    [0.97431, 0.22517, 0.003763],
+    [0.22503, 0.97345, 0.04189],
+    [0.00863, 0.04117, 0.999115]
+  ]
+}
