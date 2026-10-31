@@ -41,14 +41,22 @@ Every other orientation value agrees with PDG 2026 to the precision the spec quo
 
 `FORCE_RULES` in `src/engine/force.ts` holds the exact rule text, extensions marked, for the Guide to print.
 
-## 4. What the ledger cannot see (and drills must avoid)
+## 4. What the ledger cannot compute, and the veto table that covers part of it
 
-The spec's checks are additive quantum numbers, a necessary angular-momentum parity and kinematics. They don't include parity, C-parity, G-parity or isospin. So:
-- **η → π⁺π⁻** passes every account and the engine calls it "allowed, strong". It is forbidden by P and CP.
-- **η → π⁺π⁻π⁰** comes out "strong". It actually goes through isospin breaking, and η's lifetime (5.0 × 10⁻¹⁹ s) sits in the electromagnetic band.
-- **π⁰ → 3γ** and **Z → γγ** pass the ledger. C-parity and Landau–Yang forbid them; these are the curated facts.
+The spec's checks are additive quantum numbers, a necessary angular-momentum parity and kinematics. They don't include parity, C-parity, G-parity or isospin.
 
-The engine attaches `LEDGER_LIMITS_NOTE` to every strong verdict. A test pins η → π⁺π⁻ as a known blind spot. Seed drills must not use these cases as "allowed" answers. A sourced table of curated symmetry vetoes would fix this properly (v1.1).
+**Fixed (phase 2):** `src/data/vetoes.ts` is a curated symmetry-veto table. It's copied from the PDG 2026 listings, where these modes appear under "C, P, CP or LF violating modes" with the symmetry named:
+- η → π⁺π⁻, π⁰π⁰, 4π⁰ (P, CP)
+- η → 3γ, π⁰γ (C)
+- η′ → π⁺π⁻, π⁰π⁰ (P, CP)
+- η′ → π⁰ρ⁰, 3γ (C)
+- π⁰ → 3γ (C)
+- J/ψ → γγ (C)
+- Z → γγ (Landau–Yang)
+
+It's the `symmetry` account, last in the audit order. A test proves that every veto passes all the computed accounts, so each row adds something the ledger can't see. Charge conjugates match automatically.
+
+**Still open:** η → π⁺π⁻π⁰ is allowed (correctly), but the force rules call it "strong". It actually goes through isospin breaking, and η's lifetime (5.0 × 10⁻¹⁹ s) sits in the electromagnetic band. Seed drills must not ask for its force.
 
 ## 5. Vertex rules (§5.4)
 

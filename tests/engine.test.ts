@@ -165,10 +165,13 @@ describe('force rules beyond the golden set', () => {
   it('strong at parton level', () => {
     expect(f('u ubar -> g g', true).force).toBe('strong');
   });
-  it('documents the ledger’s blind spot: η → π⁺π⁻ passes every account (it is P- and CP-forbidden)', () => {
-    const r = f('eta -> pi+ pi-');
-    expect(r.force).toBe('strong');
-    expect(r.notes.join(' ')).toMatch(/does not check parity/);
+  it('η → π⁺π⁻ is vetoed by the curated P/CP table', () => {
+    const a = auditReaction(parseReaction('eta -> pi+ pi-'));
+    expect(a.violated).toEqual(['symmetry']);
+    expect(f('eta -> pi+ pi-').force).toBe('forbidden');
+  });
+  it('strong verdicts still say which symmetries are not computed', () => {
+    expect(f('Delta++ -> p pi+').notes.join(' ')).toMatch(/not computed/);
   });
 });
 
@@ -238,14 +241,30 @@ describe('curated loop facts', () => {
       expect(checkVertex(legs(...f.vertex!)).status, f.id).toBe('not_tree_level');
     }
   });
-  it('every curated process with a forbidden verdict passes the ledger (so the reason is genuinely beyond it) unless it is a ledger violation', () => {
-    const z = auditReaction(parseReaction('Z -> gamma gamma'));
-    expect(z.allowed).toBe(true); // Landau–Yang is not a ledger account
-    expect(auditReaction(parseReaction('pi0 -> gamma gamma gamma')).allowed).toBe(true); // C-parity is not a ledger account
-    expect(auditReaction(parseReaction('mu- -> e- gamma')).allowed).toBe(false);
+  it('curated forbidden processes are caught by the symmetry account only', () => {
+    expect(auditReaction(parseReaction('Z -> gamma gamma')).violated).toEqual(['symmetry']);
+    expect(auditReaction(parseReaction('pi0 -> gamma gamma gamma')).violated).toEqual(['symmetry']);
+    expect(auditReaction(parseReaction('mu- -> e- gamma')).violated).toEqual(['L_e', 'L_mu']);
   });
   it('every fact has a source', () => {
     for (const f of CURATED_FACTS) expect(f.source.length, f.id).toBeGreaterThan(10);
+  });
+});
+
+describe('symmetry veto table', () => {
+  it('every veto passes every computed account, so it adds information the ledger lacks', async () => {
+    const { SYMMETRY_VETOES } = await import('../src/data/vetoes');
+    for (const v of SYMMETRY_VETOES) {
+      const a = auditReaction(parseReaction(v.process));
+      expect(a.violated, v.id).toEqual(['symmetry']);
+      expect(v.source, v.id).toMatch(/PDG 2026/);
+    }
+  });
+  it('matches leg order and charge conjugates, and leaves allowed neighbours alone', () => {
+    expect(auditReaction(parseReaction('eta -> pi- pi+')).violated).toEqual(['symmetry']);
+    expect(auditReaction(parseReaction('pi0 -> gamma gamma')).allowed).toBe(true);
+    expect(auditReaction(parseReaction('eta -> gamma gamma')).allowed).toBe(true);
+    expect(auditReaction(parseReaction('eta -> pi+ pi- pi0')).allowed).toBe(true);
   });
 });
 

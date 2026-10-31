@@ -2,13 +2,14 @@
 // account, a necessary-only angular-momentum check, colour, the decay threshold
 // and four-momentum vetoes. Pure functions; every verdict in the app comes from here.
 
-import { formatThirds } from './notation';
+import { SYMMETRY_VETOES, type SymmetryVeto } from '../data/vetoes';
+import { formatThirds, parseReaction } from './notation';
 import { getParticle, isFermion, leptonNumber } from './particles';
 import type { AccountId, AccountResult, AuditResult, FlavourKey, Particle, Reaction } from './types';
 
 /** Order matters: the first violated account in this list is the headline reason. */
 export const ACCOUNT_ORDER: AccountId[] = [
-  'charge', 'baryon', 'lepton', 'L_e', 'L_mu', 'L_tau', 'spin_parity', 'colour', 'threshold', 'kinematics',
+  'charge', 'baryon', 'lepton', 'L_e', 'L_mu', 'L_tau', 'spin_parity', 'colour', 'threshold', 'kinematics', 'symmetry',
 ];
 
 export const ACCOUNT_LABELS: Record<AccountId, string> = {
@@ -22,6 +23,7 @@ export const ACCOUNT_LABELS: Record<AccountId, string> = {
   colour: 'Colour (free particles must be colour singlets)',
   threshold: 'Energy threshold',
   kinematics: 'Four-momentum',
+  symmetry: 'Discrete symmetries (curated PDG vetoes)',
 };
 
 const FLAVOURS: FlavourKey[] = ['S', 'C', 'B', 'T'];
@@ -133,6 +135,32 @@ function spinParityAccount(ins: Particle[], outs: Particle[]): AccountResult {
   };
 }
 
+const sameMultiset = (a: string[], b: string[]) => a.length === b.length && [...a].sort().join('|') === [...b].sort().join('|');
+
+const VETO_INDEX: { veto: SymmetryVeto; initial: string[]; final: string[] }[] = SYMMETRY_VETOES.map((veto) => {
+  const r = parseReaction(veto.process);
+  return { veto, initial: r.initial, final: r.final };
+});
+
+/** Find a curated veto matching this reaction or its charge conjugate. */
+export function findVeto(r: Reaction): SymmetryVeto | null {
+  const conj = (ids: string[]) => ids.map((id) => getParticle(id).antiparticle);
+  for (const v of VETO_INDEX) {
+    if (sameMultiset(v.initial, r.initial) && sameMultiset(v.final, r.final)) return v.veto;
+    if (sameMultiset(v.initial, conj(r.initial)) && sameMultiset(v.final, conj(r.final))) return v.veto;
+  }
+  return null;
+}
+
+function symmetryAccount(r: Reaction): AccountResult {
+  const base = { id: 'symmetry' as const, label: ACCOUNT_LABELS.symmetry };
+  const v = findVeto(r);
+  if (v) {
+    return { ...base, status: 'violated', detail: `Forbidden by ${v.violates.join(' and ')}. ${v.why} PDG limit: B ${v.limit}. Source: ${v.source}.` };
+  }
+  return { ...base, status: 'not_checked', detail: 'No curated veto matches. Parity, C-parity, G-parity and isospin are not computed by the ledger.' };
+}
+
 export function auditReaction(r: Reaction): AuditResult {
   const ins = r.initial.map(getParticle);
   const outs = r.final.map(getParticle);
@@ -147,6 +175,7 @@ export function auditReaction(r: Reaction): AuditResult {
     colourAccount(r, ins, outs),
     thresholdAccount(r, ins, outs),
     kinematicsAccount(r, ins, outs),
+    symmetryAccount(r),
   ];
   const violated = ACCOUNT_ORDER.filter((id) => accounts.find((a) => a.id === id)!.status === 'violated');
   const flavour = FLAVOURS.map((key) => ({ key, before: sum(ins, (p) => p[key]), after: sum(outs, (p) => p[key]) }));

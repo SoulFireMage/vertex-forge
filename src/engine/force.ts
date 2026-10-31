@@ -26,7 +26,7 @@ export const DOMINANT_FORCE_CAVEAT =
   'This is the dominant force: if a strong path is available it dominates, then electromagnetic, then weak.';
 
 export const LEDGER_LIMITS_NOTE =
-  'The ledger checks additive quantum numbers, a necessary angular-momentum condition and kinematics. It does not check parity, C-parity, G-parity or isospin, so a few processes it calls allowed are forbidden by those symmetries (η → π⁺π⁻, for example). Drills avoid them.';
+  'The ledger computes additive quantum numbers, a necessary angular-momentum condition and kinematics. Parity, C-parity, G-parity and isospin are not computed: the decays PDG lists as C-, P- or CP-violating are vetoed from a curated table, but anything outside that table is not checked.';
 
 const has = (ps: Particle[], f: (p: Particle) => boolean) => ps.some(f);
 

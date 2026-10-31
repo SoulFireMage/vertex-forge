@@ -70,7 +70,7 @@ export interface Reaction {
 
 export type AccountId =
   | 'charge' | 'baryon' | 'lepton' | 'L_e' | 'L_mu' | 'L_tau'
-  | 'spin_parity' | 'colour' | 'threshold' | 'kinematics';
+  | 'spin_parity' | 'colour' | 'threshold' | 'kinematics' | 'symmetry';
 
 export type AccountStatus = 'balances' | 'violated' | 'not_checked';
 
